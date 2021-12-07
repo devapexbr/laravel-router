@@ -322,7 +322,7 @@ class RouterCommand extends Command
 
                                 $method_url = $route_add->prefix ? "{$route_add->prefix}/" : '';
 
-                                $method_url .= $route_add->name ?? ($method == "index" ? "/" : $method);
+                                $method_url .= $route_add->name ?? ($method == "index" ? "" : $method);
 
                                 //Parametros da URL
                                 $method_reflection = new ReflectionMethod($classe, $method);
@@ -334,7 +334,7 @@ class RouterCommand extends Command
                                     foreach ($method_reflection_params as $param) {
 
                                         $param_class = $param->getType();
-                                        if (!$param_class || !Str::contains($param_class, "Request")) {
+                                        if (!$param_class || !Str::contains($param_class, ['Request','DataTable'])) {
                                             $method_url .= "/{" . $param->name;
                                             $method_url .= ($param->isOptional()) ? "?}" : "}";
                                         }
