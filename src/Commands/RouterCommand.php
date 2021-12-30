@@ -121,14 +121,14 @@ class RouterCommand extends Command
     {
         parent::__construct();
 
-        $this->parameters = config("router.parameters");
+        $this->parameters = collect(config("router.parameters"));
 
         //Métodos padrão do laravel a serem ignorados
         $this->laravel_methods = get_class_methods(new Controller());
         $this->ignore_methods = collect($this->laravel_methods)->merge(config("router.ignore_methods"));
 
         //Termos chave para ignorar determinados metodos nos controllers
-        $this->reject_terms = config("router.reject_terms");
+        $this->reject_terms = collect(config("router.reject_terms"));
 
         $this->rotas_web = collect();
         $this->rotas_api = collect();
@@ -380,9 +380,10 @@ class RouterCommand extends Command
                 //Verifica se existem opções definidas no config.directories
 
                 $dir_config_name = $path_collection->filter()->implode('/');
-                if(config("router.directories")->has($dir_config_name)){
+                $config_directories = collect(config("router.directories"));
+                if($config_directories->has($dir_config_name)){
 
-                    foreach(config("router.directories")->get($dir_config_name) as $attribute => $value){
+                    foreach($config_directories->get($dir_config_name) as $attribute => $value){
                         $group_add->$attribute = $value;
                     }
                 }
@@ -430,9 +431,7 @@ class RouterCommand extends Command
 
                 if ($this->parameters->flatten()->contains($nome_param)) {
 
-                    $config_param_name = $this->parameters->search(function(Collection $item) use($nome_param){
-                        return $item->contains($nome_param);
-                    });
+                    $config_param_name = $this->parameters->search(fn($item) => collect($item)->contains($nome_param));
 
                     $correct_param_name = $config_param_name ?? $nome_param;
 

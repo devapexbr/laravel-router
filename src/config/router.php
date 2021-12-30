@@ -59,33 +59,33 @@ return [
     /**
      * Parametros phpDOC a serem considerados, personalize aqui seus próprios parametros
      */
-    "parameters" => collect([
-        "middleware"    => collect(["middleware", "mw"]),
-        "method"        => collect(["method", "mt"]),
-        "as"            => collect(["as"]),
-        "url"        => collect(["url","u"]),
-        "name"        => collect(["action", "name", "a", "n"]),
-        "prefix"        => collect(["prefix", "pre", "p"]),
-        "domain"     => collect(["subdomain", "sd", "domain", "d"]),
-        "namespace" => collect(["namespace", "ns"])
-    ]),
+    "parameters" => [
+        "middleware"    => ["middleware", "mw"],
+        "method"        => ["method", "mt"],
+        "as"            => ["as"],
+        "url"        => ["url","u"],
+        "name"        => ["action", "name", "a", "n"],
+        "prefix"        => ["prefix", "pre", "p"],
+        "domain"     => ["subdomain", "sd", "domain", "d"],
+        "namespace" => ["namespace", "ns"]
+    ],
 
     /**
      * Metodos a serem ignorados
      */
-    "ignore_methods" => collect(["__construct"]), //Controller Methods to be ignored by the generator
+    "ignore_methods" => ["__construct"], //Controller Methods to be ignored by the generator
 
     /**
      * Termos chave para ignorar determinados Controllers ou Metodos. Defina @reject_term no phpDOC para que o script ignore o controller ou metodo
      */
-    "reject_terms" => collect(["noturl", "notroute", "notgenerate", "ignore", "i"]),
+    "reject_terms" => ["noturl", "notroute", "notgenerate", "ignore", "i"],
 
-    "directories" => collect([
+    "directories" => [
         "Dir" => [
             "prefix" => "",
             "as" => "",
             "domain" => "",
             "namespace" => "",
         ]
-    ])
+    ]
 ];
